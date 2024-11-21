@@ -80,18 +80,21 @@ def save():
 
 def find_password():
     company = company_entry.get()
-    try:
-        with open("Day-29/data.json") as data_file:
-            data = json.load(data_file)
-    except FileNotFoundError:
-        messagebox.showinfo(title="Error", message= "No Data File Found")
+    if len(company) == 0:
+        messagebox.showinfo(title= "Invalid data", message= "Company name cannot be empty.")
     else:
-        if company in data:
-            email = data[company]["email"]
-            password = data[company]["password"]
-            messagebox.showinfo(title= company, message= f"Email: {email} \n Password: {password}")
+        try:
+            with open("Day-29/data.json") as data_file:
+                data = json.load(data_file)
+        except FileNotFoundError:
+            messagebox.showinfo(title="Error", message= "No Data File Found")
         else:
-            messagebox.showinfo(title="Error", message= f"No details for {company} exists.")
+            if company in data:
+                email = data[company]["email"]
+                password = data[company]["password"]
+                messagebox.showinfo(title= company, message= f"Email: {email} \n Password: {password}")
+            else:
+                messagebox.showinfo(title="Error", message= f"No details for {company} exists.")
 
 window = Tk()
 
